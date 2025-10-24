@@ -1,0 +1,7 @@
+./venv
+.env
+.vene
+.node_modules
+node_modules
+idea
+.idea
