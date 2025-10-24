@@ -46,24 +46,24 @@ db.init_app(app)
 migrate = Migrate(app=app, db=db)
 
 
-from src.databases.models.User import User
-from src.databases.models.Profile import Profile
-from src.databases.models.Transaction import Transaction
+# from src.databases.models.User import User
+# from src.databases.models.Profile import Profile
+# from src.databases.models.Transaction import Transaction
 
 
-from src.controllers.AuthController import authController
-from src.controllers.UserController import userController
-from src.controllers.ProfileController import profileController
-from src.controllers.SelectorController import selectorController
+# from src.controllers.AuthController import authController
+# from src.controllers.UserController import userController
+# from src.controllers.ProfileController import profileController
+# from src.controllers.SelectorController import selectorController
 
 
 # migrate = Migrate(app)
 # # CORS(app, origins=["http://localhost:3000", "https://myfrontend.com/"])
 app.config["JWT_SECRET_KEY"] = "super-secret-key"  # change this!
-app.register_blueprint(authController)
-app.register_blueprint(userController)
-app.register_blueprint(profileController)
-app.register_blueprint(selectorController)
+# app.register_blueprint(authController)
+# app.register_blueprint(userController)
+# app.register_blueprint(profileController)
+# app.register_blueprint(selectorController)
 
 
 # API_KEY = "my_secret_api_key"
@@ -92,6 +92,10 @@ def hello():
 def relay():
     print(load_dotenv())
     return "Rest!"
+
+@app.route("/heatlh")
+def healthcheck():
+    return "Server is running!"
 
 def get_rabbitmq_connection():
     connection = pika.BlockingConnection(
@@ -123,46 +127,46 @@ def create_test():
     # UserRepository.create_user(data)
     return jsonify({ "data": "User Created" })
 
-@app.route("/test", methods=["POST"])
-def render():
-    # from src.models.User import User
-    # data = {
-    #     "firstname":"Sunny",
-    #     "lastname":"Pepple",
-    #     "email": "slpepple01@gmail.com",
-    #     "password":"password"
-    # }
+# @app.route("/test", methods=["POST"])
+# def render():
+#     # from src.models.User import User
+#     # data = {
+#     #     "firstname":"Sunny",
+#     #     "lastname":"Pepple",
+#     #     "email": "slpepple01@gmail.com",
+#     #     "password":"password"
+#     # }
 
-    data = request.get_json()
+#     data = request.get_json()
 
-    firstname = data.get("firstname")
-    lastname = data.get("lastname")
-    email = data.get("email")
-    password = data.get("password") 
+#     firstname = data.get("firstname")
+#     lastname = data.get("lastname")
+#     email = data.get("email")
+#     password = data.get("password") 
 
-    if not all([firstname, lastname, email, password]):
-        return jsonify({"error": "Missing required fields"}), 400
+#     if not all([firstname, lastname, email, password]):
+#         return jsonify({"error": "Missing required fields"}), 400
 
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+#     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    new_user = User(
-        firstname=firstname,
-        lastname=lastname,
-        email=email,
-        password=hashed_password
-    )
+#     new_user = User(
+#         firstname=firstname,
+#         lastname=lastname,
+#         email=email,
+#         password=hashed_password
+#     )
 
-    db.session.add(new_user)
-    db.session.commit()
+#     db.session.add(new_user)
+#     db.session.commit()
 
-    return jsonify({
-        "message": "User created successfully",
-        "user": {
-            "firstname": firstname,
-            "lastname": lastname,
-            "email": email
-        }
-    }), 201
+#     return jsonify({
+#         "message": "User created successfully",
+#         "user": {
+#             "firstname": firstname,
+#             "lastname": lastname,
+#             "email": email
+#         }
+#     }), 201
 
     # if request.method ==  "POST":
     #     firstname = request.get_json()["firstname"]
